@@ -170,3 +170,9 @@ augroup END
 " better man page support
 noremap K :SuperMan <cword><CR>
 
+
+" ----- custom settings -----
+nmap <C-t><up>    :tabr<cr>
+nmap <C-t><down>  :tabl<cr>
+nmap <C-t><left>  :tabp<cr>
+nmap <C-t><right> :tabn<cr>
