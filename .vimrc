@@ -1,178 +1,172 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Maintainer: 
-"       Amir Salihefendic — @amix3k
+" File: .vimrc
+" Author: Jake Zimmerman <jake@zimmerman.io>
 "
-" Awesome_version:
-"       Get this config, nice color schemes and lots of plugins!
+" How I configure Vim :P
 "
-"       Install the awesome version from:
-"
-"           https://github.com/amix/vimrc
-"
-" Sections:
-"    -> General
-"    -> VIM user interface
-"    -> Colors and Fonts
-"    -> Files and backups
-"    -> Text, tab and indent related
-"    -> Moving around, tabs and buffers
-"    -> Status line
-"    -> Editing mappings
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+" Gotta be first
+set nocompatible
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Sets how many lines of history VIM has to remember
-set history=500
+filetype off
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
-" Set to auto read when a file is changed from the outside
-set autoread
+Plugin 'VundleVim/Vundle.vim'
 
-" Fast saving
-nmap <leader>w :w!<cr>
+" ----- Making Vim look good ------------------------------------------
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tomasr/molokai'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 
-" Show lines
-set number
-set cursorline
+" ----- Vim as a programmer's text editor -----------------------------
+Plugin 'scrooloose/nerdtree'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'vim-syntastic/syntastic'
+Plugin 'xolox/vim-misc'
+Plugin 'xolox/vim-easytags'
+Plugin 'majutsushi/tagbar'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'vim-scripts/a.vim'
 
+" ----- Working with Git ----------------------------------------------
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => VIM user interface
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn on the Wild menu
-set wildmenu
+" ----- Other text editing features -----------------------------------
+Plugin 'Raimondi/delimitMate'
 
-"Always show current position
+" ----- man pages, tmux -----------------------------------------------
+Plugin 'jez/vim-superman'
+Plugin 'christoomey/vim-tmux-navigator'
+
+" ----- Syntax plugins ------------------------------------------------
+Plugin 'jez/vim-c0'
+Plugin 'jez/vim-ispc'
+Plugin 'kchmck/vim-coffee-script'
+
+" ---- Extras/Advanced plugins ----------------------------------------
+" Highlight and strip trailing whitespace
+Plugin 'ntpeters/vim-better-whitespace'
+" Easily surround chunks of text
+"Plugin 'tpope/vim-surround'
+" Align CSV files at commas, align Markdown tables, and more
+Plugin 'godlygeek/tabular'
+" Automaticall insert the closing HTML tag
+"Plugin 'HTML-AutoCloseTag'
+" Make tmux look like vim-airline (read README for extra instructions)
+"Plugin 'edkolev/tmuxline.vim'
+" All the other syntax plugins I use
+"Plugin 'ekalinin/Dockerfile.vim'
+"Plugin 'digitaltoad/vim-jade'
+"Plugin 'tpope/vim-liquid'
+"Plugin 'cakebaker/scss-syntax.vim'
+
+call vundle#end()
+
+filetype plugin indent on
+
+" --- General settings ---
+set backspace=indent,eol,start
 set ruler
-
-" Height of the command bar
-set cmdheight=2
-
-" A buffer becomes hidden when it is abandoned
-set hid
-
-" Ignore case when searching
-set ignorecase
-
-" When searching try to be smart about cases 
-set smartcase
-
-" Highlight search results
+set number
+set showcmd
+set incsearch
 set hlsearch
 
-" Makes search act like search in modern browsers
-set incsearch 
+syntax on
 
-" Don't redraw while executing macros (good performance config)
-set lazyredraw 
+set mouse=a
+set encoding=utf-8
 
-" For regular expressions turn magic on
-set magic
+" We need this for plugins like Syntastic and vim-gitgutter which put symbols
+" in the sign column.
+hi clear SignColumn
 
-" Show matching brackets when text indicator is over them
-set showmatch 
-" How many tenths of a second to blink when matching brackets
-set mat=2
+" ----- Plugin-Specific Settings --------------------------------------
 
-" Add a bit extra margin to the left
-set foldcolumn=1
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Fonts
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enable syntax highlighting
-syntax enable 
-
+" ----- altercation/vim-colors-solarized settings -----
+" Toggle this to "light" for light colorscheme
 set background=dark
 
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
+" Uncomment the next line if your terminal is not configured for solarized
+"let g:solarized_termcolors=256
 
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-
-" Hightlight lines
-hi LineNr cterm=bold ctermfg=DarkGrey
-hi CursorLineNr cterm=bold ctermfg=white
+" Set the colorscheme
+colorscheme desert
 
 
+" ----- bling/vim-airline settings -----
+" Always show statusbar
+set laststatus=2
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Files, backups and undo
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Turn backup off, since most stuff is in SVN, git et.c anyway...
-set nobackup
-set nowb
-set noswapfile
+" Fancy arrow symbols, requires a patched font
+" To install a patched font, run over to
+"     https://github.com/abertsch/Menlo-for-Powerline
+" download all the .ttf files, double-click on them and click "Install"
+" Finally, uncomment the next line
+let g:airline_powerline_fonts = 1
+let g:Powerline_symbols='unicode'
 
+" Show PASTE if in paste mode
+let g:airline_detect_paste=1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Text, tab and indent related
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Use spaces instead of tabs
-set expandtab
+" Show airline for tabs too
+let g:airline#extensions#tabline#enabled = 1
 
-" Be smart when using tabs ;)
-set smarttab
+" Use the solarized theme for the Airline status bar
+let g:airline_theme='luna'
 
-" 1 tab == 4 spaces
-set shiftwidth=4
-set tabstop=4
-
-" Linebreak on 500 characters
-set lbr
-set tw=500
-
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+" ----- jistr/vim-nerdtree-tabs -----
+" Open/close NERDTree Tabs with \t
+nmap <silent> <leader>t :NERDTreeTabsToggle<CR>
+" To have NERDTree always open on startup
+"let g:nerdtree_tabs_open_on_console_startup = 1
 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Moving around, tabs, windows and buffers
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Map <Space> to / (search) and Ctrl-<Space> to ? (backwards search)
-map <space> /
-map <c-space> ?
+" ----- scrooloose/syntastic settings -----
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = "▲"
+augroup mySyntastic
+  au!
+  au FileType tex let b:syntastic_mode = "passive"
+augroup END
 
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
 
-" Smart way to move between windows
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
+" ----- xolox/vim-easytags settings -----
+" Where to look for tags files
+set tags=./tags;,~/.vimtags
+" Sensible defaults
+let g:easytags_events = ['BufReadPost', 'BufWritePost']
+let g:easytags_async = 1
+let g:easytags_dynamic_files = 2
+let g:easytags_resolve_links = 1
+let g:easytags_suppress_ctags_warning = 1
 
-" Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
+" ----- majutsushi/tagbar settings -----
+" Open/close tagbar with \b
+nmap <silent> <leader>b :TagbarToggle<CR>
+" Uncomment to open tagbar automatically whenever possible
+"autocmd BufEnter * nested :call tagbar#autoopen(0)
 
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
 
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
+" ----- airblade/vim-gitgutter settings -----
+" In vim-airline, only display "hunks" if the diff is non-zero
+let g:airline#extensions#hunks#non_zero_only = 1
 
-" Useful mappings for managing tabs
-map <leader>tn :tabnew<cr>
-map <leader>to :tabonly<cr>
-map <leader>tc :tabclose<cr>
-map <leader>tm :tabmove 
-map <leader>t<leader> :tabnext 
 
-" Opens a new tab with the current buffer's path
-" Super useful when editing files in the same directory
-map <leader>te :tabedit <c-r>=expand("%:p:h")<cr>/
+" ----- Raimondi/delimitMate settings -----
+let delimitMate_expand_cr = 1
+augroup mydelimitMate
+  au!
+  au FileType markdown let b:delimitMate_nesting_quotes = ["`"]
+  au FileType tex let b:delimitMate_quotes = ""
+  au FileType tex let b:delimitMate_matchpairs = "(:),[:],{:},`:'"
+  au FileType python let b:delimitMate_nesting_quotes = ['"', "'"]
+augroup END
 
-" Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
-
+" ----- jez/vim-superman settings -----
+" better man page support
+noremap K :SuperMan <cword><CR>
 
